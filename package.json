@@ -8,6 +8,11 @@
     "eject": "expo eject"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^1.2.32",
+    "@fortawesome/free-regular-svg-icons": "^5.15.1",
+    "@fortawesome/free-solid-svg-icons": "^5.15.1",
+    "@fortawesome/react-native-fontawesome": "^0.2.6",
+    "@react-navigation/bottom-tabs": "^5.11.1",
     "@react-navigation/native": "^5.8.9",
     "expo": "~39.0.2",
     "expo-status-bar": "~1.0.2",
@@ -15,7 +20,12 @@
     "react-dom": "16.13.1",
     "react-native": "https://github.com/expo/react-native/archive/sdk-39.0.4.tar.gz",
     "react-native-elements": "^3.0.0-alpha.1",
+    "react-native-gesture-handler": "~1.7.0",
+    "react-native-reanimated": "^1.13.2",
+    "react-native-safe-area-context": "^3.1.9",
+    "react-native-screens": "~2.10.1",
     "react-native-status-bar-height": "^2.6.0",
+    "react-native-svg": "^12.1.0",
     "react-native-web": "~0.13.12"
   },
   "devDependencies": {
