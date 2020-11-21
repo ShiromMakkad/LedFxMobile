@@ -1,14 +1,14 @@
 {
   "expo": {
-    "name": "LedFxMobile",
-    "slug": "LedFxMobile",
+    "name": "LedFx",
+    "slug": "LedFx",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#333333"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
@@ -21,8 +21,8 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#FFFFFF"
+        "foregroundImage": "./assets/white-icon.png",
+        "backgroundColor": "#333333"
       }
     },
     "web": {
