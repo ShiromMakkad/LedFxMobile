@@ -18,7 +18,8 @@ global.theme = {
     success: '#3CB479',
     error: '#F44336',
     warning: '#BAA441',
-    lightGray: '#949494',
+    info: '#949494',
+    lightGray: '#d1d1d1',
     background: '#FAFAFA'
   }
 }
@@ -51,8 +52,82 @@ export default function App() {
     devices: [
       {
         name: "Apt",
-        ip: "http://192.168.0.192:8888"
-      }
+        protocol: "http",
+        ip: "192.168.0.192",
+        port: "8888"
+      },
+      {
+        name: "Apt",
+        protocol: "http",
+        ip: "192.168.0.192",
+        port: "8888"
+      },
+      {
+        name: "Apt",
+        protocol: "http",
+        ip: "192.168.0.192",
+        port: "8888"
+      },
+      {
+        name: "Apt",
+        protocol: "http",
+        ip: "192.168.0.192",
+        port: "8888"
+      },
+      {
+        name: "Apt",
+        protocol: "http",
+        ip: "192.168.0.192",
+        port: "8888"
+      },
+      {
+        name: "Apt",
+        protocol: "http",
+        ip: "192.168.0.192",
+        port: "8888"
+      },
+      {
+        name: "Apt",
+        protocol: "http",
+        ip: "192.168.0.192",
+        port: "8888"
+      },
+      {
+        name: "Apt",
+        protocol: "http",
+        ip: "192.168.0.192",
+        port: "8888"
+      },
+      {
+        name: "Apt",
+        protocol: "http",
+        ip: "192.168.0.192",
+        port: "8888"
+      },
+      {
+        name: "Apt",
+        protocol: "http",
+        ip: "192.168.0.192",
+        port: "8888"
+      },
+      {
+        name: "Apt",
+        protocol: "http",
+        ip: "192.168.0.192",
+        port: "8888"
+      },
+      {
+        name: "Apt",
+        protocol: "http",
+        ip: "192.168.0.192",
+        port: "8888"
+      },
+      {
+        name: "Apt",
+        protocol: "http",
+        ip: "192.168.0.192",
+        port: "8888"
+      },
     ]
   })
 
@@ -70,7 +145,7 @@ export default function App() {
             }}
             tabBarOptions={{
               activeTintColor: global.theme.colors.primary,
-              inactiveTintColor: '#ffffff',
+              inactiveTintColor: global.theme.colors.background,
               safeAreaInsets: { top: 0, bottom: 7, right: 0, left: 0 },
               tabStyle: {
                 paddingTop: 7

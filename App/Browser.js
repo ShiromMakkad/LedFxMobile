@@ -8,7 +8,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { ThemeContext, Button } from 'react-native-elements'
 
 export default function Browser({ devices, setDevices }) {
-    const [webViewState, setWebViewState] = useState(2);
+    const [webViewState, setWebViewState] = useState(1);
     // 0 means show page
     // 1 means show loading screen
     // -1 means show error screen
@@ -18,7 +18,9 @@ export default function Browser({ devices, setDevices }) {
     const navigation = useNavigation();
 
     useEffect(() => {
-        navigation.navigate("Add");
+        if(devices.devices.length === 0) {
+            navigation.navigate("Add");
+        }
     })
 
     let webViewRef;
@@ -32,6 +34,7 @@ export default function Browser({ devices, setDevices }) {
     }
 
     const displayNoDevice = () => {
+        setWebViewState(2);
         return (
             <View style={styles.view}>
                 <MaterialCommunityIcons name="lightbulb-off-outline" size={150} color={global.theme.colors.lightGray} style={{ margin: 5 }} />
@@ -45,8 +48,8 @@ export default function Browser({ devices, setDevices }) {
     const displayError = () => {
         return (
             <View style={styles.view}>
-                <MaterialCommunityIcons name="wifi-off" size={150} color={global.theme.colors.lightGray} style={{ margin: 5 }} />
-                <Text style={[styles.text, { color: global.theme.colors.lightGray }]}>
+                <MaterialCommunityIcons name="wifi-off" size={150} color={global.theme.colors.info} style={{ margin: 5 }} />
+                <Text style={[styles.text, { color: global.theme.colors.info }]}>
                     {"Failed to load the " } 
                     <Text style={{fontWeight: 'bold'}}>{ devices.devices[devices.metadata.selected_device].name }</Text>
                     { " device"}
@@ -63,7 +66,7 @@ export default function Browser({ devices, setDevices }) {
             { webViewState == -1 ? displayError() : null } 
             {
                 devices.devices.length !== 0 ?
-                <WebView
+                    <WebView
                         ref={ref => (webViewRef = ref)}
                         startInLoadingState={true}
                         onError={() => { setWebViewState(-1) }}
@@ -71,7 +74,7 @@ export default function Browser({ devices, setDevices }) {
                         onLoadStart={() => { setWebViewState(1) }}
                         onNavigationStateChange={(navState) => { if (navState.url === "about:blank" && !navState.loading) setWebViewState(-1) }} //Necessary because sometimes it loads about:blank when a site doesn't render and says that the result was successful
                         style={[{ marginBottom: useBottomTabBarHeight() }, webViewState === 0 ? { display: "flex" } : { display: "none" }]}
-                        source={{ uri: devices.devices[devices.metadata.selected_device].ip }} />
+                        source={{ uri: devices.devices[devices.metadata.selected_device].protocol + "://" + devices.devices[devices.metadata.selected_device].ip + ":" + devices.devices[devices.metadata.selected_device].port + "/" }} />
                 :
                 displayNoDevice()
             }
@@ -89,6 +92,6 @@ const styles = { ...global.styles, ...StyleSheet.create({
         height: '100%',
         flexDirection: 'column', 
         justifyContent: 'center', 
-        alignItems: 'center' 
+        alignItems: 'center',
     }
 })}

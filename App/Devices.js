@@ -1,18 +1,48 @@
-import React from 'react'
-import { View, Text, Button } from 'react-native'
+import React, { useState } from 'react'
+import DeviceItem from './components/DeviceItem'
+import { View, ScrollView, TouchableWithoutFeedback, StyleSheet } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import { useNavigation } from '@react-navigation/native'
 import produce from 'immer'
+import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs'
+import { MaterialCommunityIcons } from '@expo/vector-icons'; 
 
 export default function Devices({ devices, setDevices }) {
-    const navigation = useNavigation();
+    const [isDeleting, setIsDeleting] = useState(false);
+
+    const setSelectedDevice = (deviceIdx) => {
+        setDevices(devices => produce(devices, devicesDraft => { devicesDraft.metadata.selected_device = deviceIdx }))
+    }
+
+    const deleteDevice = (deviceIdx) => {
+        setDevices(devices => produce(devices, devicesDraft => { devicesDraft.devices.splice(deviceIdx, 1) }))
+    }
+ 
+    const styles = {
+        ...global.styles, ...StyleSheet.create({
+            floating: {
+                borderRadius: 100,
+                padding: 10,
+                backgroundColor: isDeleting ? global.theme.colors.success : global.theme.colors.error,
+                position: 'absolute',
+                bottom: 10,
+                right: 10,
+                zIndex: 2
+            },
+        })
+    }
 
     return (
-        <SafeAreaView>
-            <View>
-                <Text>Test Devices</Text>
-                <Button title="Test" onPress={() => { setDevices(devices => produce(devices, devicesDraft => { devicesDraft.devices[devicesDraft.metadata.selected_device].ip = "http://127.0.0.1" })); navigation.navigate('Browser') }} />
-            </View>
+        <SafeAreaView style={{ marginBottom: useBottomTabBarHeight(), flex: 1 }}>
+            <ScrollView>
+                {devices.devices.map((device, i) => {
+                    return <DeviceItem device={device} isSelected={devices.metadata.selected_device === i} isDeleting={isDeleting} key={i} onPress={() => { setSelectedDevice(i) }} onDelete={ () => { deleteDevice(i) } } />
+                })}
+            </ScrollView>
+            <TouchableWithoutFeedback onPress={() => { setIsDeleting(!isDeleting) }}>
+                <View style={ styles.floating }>
+                    <MaterialCommunityIcons name={ isDeleting ? "check" : "trash-can" } size={35} color={ global.theme.colors.background } />
+                </View>
+            </TouchableWithoutFeedback>
         </SafeAreaView>
     )
 }
