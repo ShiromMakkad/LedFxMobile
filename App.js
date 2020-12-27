@@ -45,88 +45,8 @@ const ColoredStatusBar = ({ backgroundColor, ...props }) => (
 const Tab = createBottomTabNavigator();
 
 export default function App() {
-  const [selectedDevice, setSelectedDevice] = useState(5)
-
-  const [devices, setDevices] = useState([
-      {
-        name: "Apt",
-        protocol: "http",
-        ip: "192.168.0.192",
-        port: "8888"
-      },
-      {
-        name: "Apt",
-        protocol: "http",
-        ip: "192.168.0.192",
-        port: "8888"
-      },
-      {
-        name: "Apt",
-        protocol: "http",
-        ip: "192.168.0.192",
-        port: "8888"
-      },
-      {
-        name: "Apt",
-        protocol: "http",
-        ip: "192.168.0.192",
-        port: "8888"
-      },
-      {
-        name: "Apt",
-        protocol: "http",
-        ip: "192.168.0.192",
-        port: "8888"
-      },
-      {
-        name: "Apt",
-        protocol: "http",
-        ip: "192.168.0.192",
-        port: "8888"
-      },
-      {
-        name: "Apt",
-        protocol: "http",
-        ip: "192.168.0.192",
-        port: "8888"
-      },
-      {
-        name: "Apt",
-        protocol: "http",
-        ip: "192.168.0.192",
-        port: "8888"
-      },
-      {
-        name: "Apt",
-        protocol: "http",
-        ip: "192.168.0.192",
-        port: "8888"
-      },
-      {
-        name: "Apt",
-        protocol: "http",
-        ip: "192.168.0.192",
-        port: "8888"
-      },
-      {
-        name: "Apt",
-        protocol: "http",
-        ip: "192.168.0.192",
-        port: "8888"
-      },
-      {
-        name: "Apt",
-        protocol: "http",
-        ip: "192.168.0.192",
-        port: "8888"
-      },
-      {
-        name: "Apt",
-        protocol: "http",
-        ip: "192.168.0.192",
-        port: "8888"
-      },
-  ])
+  const [selectedDevice, setSelectedDevice] = useState(-1)
+  const [devices, setDevices] = useState([])
 
   return (
     <ThemeProvider theme={global.theme}>
@@ -141,6 +61,7 @@ export default function App() {
               }
             }}
             tabBarOptions={{
+              keyboardHidesTabBar: true,
               activeTintColor: global.theme.colors.primary,
               inactiveTintColor: global.theme.colors.background,
               safeAreaInsets: { top: 0, bottom: 7, right: 0, left: 0 },
