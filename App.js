@@ -7,6 +7,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { NavigationContainer  } from '@react-navigation/native';
 import { SafeAreaProvider } from 'react-native-safe-area-context'
 import { MaterialCommunityIcons, FontAwesome5 } from '@expo/vector-icons'; 
+import AsyncStorage from '@react-native-community/async-storage'
 import Browser from './App/Browser'
 import Devices from './App/Devices'
 import Add from './App/Add'
@@ -47,6 +48,46 @@ const Tab = createBottomTabNavigator();
 export default function App() {
   const [selectedDevice, setSelectedDevice] = useState(-1)
   const [devices, setDevices] = useState([])
+
+  const saveData = async () => {
+    try {
+      await AsyncStorage.setItem('devices', JSON.stringify(devices))
+      await AsyncStorage.setItem('selectedDevice', JSON.stringify(selectedDevice))
+    } catch (e) {
+      console.warn('Failed to save the data to the storage. Error: ' + e)
+    }
+  }
+
+  const readData = async () => {
+    try {
+      const devicesRead = await AsyncStorage.getItem('devices')
+      const selectedDeviceRead = await AsyncStorage.getItem('selectedDevice')
+  
+      if (devicesRead !== null) {
+        setDevices(JSON.parse(devicesRead));
+      }
+      else {
+        console.warn("Error reading devices")
+      }
+
+      if (selectedDeviceRead !== null) {
+        setSelectedDevice(JSON.parse(selectedDeviceRead));
+      }
+      else {
+        console.warn("Error reading selected device")
+      }
+    } catch (e) {
+      console.warn('Failed to fetch the data from storage')
+    }
+  }
+
+  useEffect(() => {
+    readData();
+  }, [])
+
+  useEffect(() => {
+    saveData();
+  }, [devices, selectedDevice])
 
   return (
     <ThemeProvider theme={global.theme}>

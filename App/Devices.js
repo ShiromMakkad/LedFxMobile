@@ -22,10 +22,12 @@ export default function Devices({ devices, setDevices, selectedDevice, setSelect
 
     const deleteDevice = (deviceIdx) => {
         if(selectedDevice == deviceIdx) {
-            console.log("Delete")
             setSelectedDevice(-1)
         }
         setDevices(devices => produce(devices, devicesDraft => { devicesDraft.splice(deviceIdx, 1) }))
+        if(deviceIdx < selectedDevice && selectedDevice !== -1) {
+            setSelectedDevice(selectedDevice - 1);
+        }
     }
  
     const styles = {
