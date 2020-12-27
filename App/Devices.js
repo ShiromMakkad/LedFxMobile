@@ -1,14 +1,24 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { View, TouchableWithoutFeedback, StyleSheet, FlatList } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import produce from 'immer'
 import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs'
 import { MaterialCommunityIcons } from '@expo/vector-icons'; 
-import { ListItem, Icon } from 'react-native-elements'
+import { ListItem } from 'react-native-elements'
 import hexToRgba from 'hex-to-rgba';
+import { useIsFocused, useNavigation } from '@react-navigation/native'
 
 export default function Devices({ devices, setDevices, selectedDevice, setSelectedDevice }) {
     const [isDeleting, setIsDeleting] = useState(false);
+
+    const isFocused = useIsFocused();
+    const navigation = useNavigation();
+
+    useEffect(() => {
+        if(isFocused && devices.length === 0) {
+            navigation.navigate("Add");
+        }
+    }, [isFocused])
 
     const deleteDevice = (deviceIdx) => {
         if(selectedDevice == deviceIdx) {

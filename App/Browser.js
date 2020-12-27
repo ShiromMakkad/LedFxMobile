@@ -53,6 +53,7 @@ export default function Browser({ devices, selectedDevice }) {
     }
 
     const displayError = () => {
+        console.log(devices[selectedDevice])
         if(selectedDevice === -1 || devices.length === 0) {
             return displayNoDevice()
         }
