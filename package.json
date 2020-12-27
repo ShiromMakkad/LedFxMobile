@@ -16,6 +16,7 @@
     "@react-navigation/native": "^5.8.9",
     "expo": "~39.0.2",
     "expo-status-bar": "~1.0.2",
+    "hex-to-rgba": "^2.0.1",
     "immer": "^8.0.0",
     "react": "16.13.1",
     "react-dom": "16.13.1",

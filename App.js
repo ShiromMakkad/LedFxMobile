@@ -45,11 +45,9 @@ const ColoredStatusBar = ({ backgroundColor, ...props }) => (
 const Tab = createBottomTabNavigator();
 
 export default function App() {
-  const [devices, setDevices] = useState({
-    metadata: {
-      selected_device: 0
-    },
-    devices: [
+  const [selectedDevice, setSelectedDevice] = useState(5)
+
+  const [devices, setDevices] = useState([
       {
         name: "Apt",
         protocol: "http",
@@ -128,8 +126,7 @@ export default function App() {
         ip: "192.168.0.192",
         port: "8888"
       },
-    ]
-  })
+  ])
 
   return (
     <ThemeProvider theme={global.theme}>
@@ -164,7 +161,7 @@ export default function App() {
                   <MaterialCommunityIcons name="lightbulb" size={size} color={color} />
                 ),
               }}>
-              {() => { return <Browser devices={devices} setDevices={setDevices} /> }}
+              {() => { return <Browser devices={devices} selectedDevice={selectedDevice} /> }}
             </Tab.Screen>
             <Tab.Screen
               name="Devices"
@@ -174,7 +171,7 @@ export default function App() {
                   <FontAwesome5 name="broadcast-tower" size={size * 0.85} color={color} />
                 ),
               }}>
-              {() => { return <Devices devices={devices} setDevices={setDevices} /> }}
+              {() => { return <Devices devices={devices} setDevices={setDevices} selectedDevice={selectedDevice} setSelectedDevice={setSelectedDevice} /> }}
             </Tab.Screen>
             <Tab.Screen
               name="Add"

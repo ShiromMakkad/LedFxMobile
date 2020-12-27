@@ -1,20 +1,21 @@
 import React, { useState } from 'react'
-import DeviceItem from './components/DeviceItem'
-import { View, ScrollView, TouchableWithoutFeedback, StyleSheet } from 'react-native'
+import { View, TouchableWithoutFeedback, StyleSheet, FlatList } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import produce from 'immer'
 import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs'
 import { MaterialCommunityIcons } from '@expo/vector-icons'; 
+import { ListItem, Icon } from 'react-native-elements'
+import hexToRgba from 'hex-to-rgba';
 
-export default function Devices({ devices, setDevices }) {
+export default function Devices({ devices, setDevices, selectedDevice, setSelectedDevice }) {
     const [isDeleting, setIsDeleting] = useState(false);
 
-    const setSelectedDevice = (deviceIdx) => {
-        setDevices(devices => produce(devices, devicesDraft => { devicesDraft.metadata.selected_device = deviceIdx }))
-    }
-
     const deleteDevice = (deviceIdx) => {
-        setDevices(devices => produce(devices, devicesDraft => { devicesDraft.devices.splice(deviceIdx, 1) }))
+        if(selectedDevice == deviceIdx) {
+            console.log("Delete")
+            setSelectedDevice(-1)
+        }
+        setDevices(devices => produce(devices, devicesDraft => { devicesDraft.splice(deviceIdx, 1) }))
     }
  
     const styles = {
@@ -31,16 +32,30 @@ export default function Devices({ devices, setDevices }) {
         })
     }
 
+      const renderItem = ({ item: device, index: i }) => (
+          // If anyone can fix the lag on this, please do. I've spent hours on it. 
+          <TouchableWithoutFeedback onPress={() => setSelectedDevice(i)}>
+              <ListItem
+                  title={device.name}
+                  subtitle={device.ip}
+                  rightIcon={isDeleting ? { name: 'trash-can', type: 'material-community', color: global.theme.colors.error, size: 33, onPress: () => deleteDevice(i) } : undefined}
+                  bottomDivider
+                  containerStyle={{ backgroundColor: selectedDevice == i ? hexToRgba(global.theme.colors.success, 0.25) : global.theme.colors.background }}
+                  underlayColor={hexToRgba(global.theme.colors.success, 0.25)}
+              />
+          </TouchableWithoutFeedback>
+      );
+
     return (
         <SafeAreaView style={{ marginBottom: useBottomTabBarHeight(), flex: 1 }}>
-            <ScrollView>
-                {devices.devices.map((device, i) => {
-                    return <DeviceItem device={device} isSelected={devices.metadata.selected_device === i} isDeleting={isDeleting} key={i} onPress={() => { setSelectedDevice(i) }} onDelete={ () => { deleteDevice(i) } } />
-                })}
-            </ScrollView>
+            <FlatList
+                keyExtractor={(item, index) => index.toString()}
+                renderItem={renderItem}
+                data={devices}
+            />
             <TouchableWithoutFeedback onPress={() => { setIsDeleting(!isDeleting) }}>
-                <View style={ styles.floating }>
-                    <MaterialCommunityIcons name={ isDeleting ? "check" : "trash-can" } size={35} color={ global.theme.colors.background } />
+                <View style={styles.floating}>
+                    <MaterialCommunityIcons name={isDeleting ? "check" : "trash-can"} size={35} color={global.theme.colors.background} />
                 </View>
             </TouchableWithoutFeedback>
         </SafeAreaView>
