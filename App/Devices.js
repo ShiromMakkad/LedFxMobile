@@ -7,6 +7,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { ListItem } from 'react-native-elements'
 import hexToRgba from 'hex-to-rgba';
 import { useIsFocused, useNavigation } from '@react-navigation/native'
+import { Platform } from 'react-native'
 
 export default function Devices({ devices, setDevices, selectedDevice, setSelectedDevice }) {
     const [isDeleting, setIsDeleting] = useState(false);
@@ -37,7 +38,7 @@ export default function Devices({ devices, setDevices, selectedDevice, setSelect
                 padding: 10,
                 backgroundColor: isDeleting ? global.theme.colors.success : global.theme.colors.error,
                 position: 'absolute',
-                bottom: 10,
+                bottom: 10 + (Platform.OS === 'ios' ? useBottomTabBarHeight() : 0),
                 right: 10,
                 zIndex: 2
             },
@@ -59,7 +60,7 @@ export default function Devices({ devices, setDevices, selectedDevice, setSelect
       );
 
     return (
-        <SafeAreaView style={{ marginBottom: useBottomTabBarHeight(), flex: 1 }}>
+        <SafeAreaView style={{ marginBottom: Platform.OS === 'ios' ? 0 : useBottomTabBarHeight(), flex: 1 }}>
             <FlatList
                 keyExtractor={(item, index) => index.toString()}
                 renderItem={renderItem}

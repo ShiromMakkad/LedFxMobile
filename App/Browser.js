@@ -1,11 +1,12 @@
 import React, { useState, useContext, useEffect } from 'react'
-import { View, Text, ActivityIndicator, StyleSheet, Image } from 'react-native'
+import { View, Text, ActivityIndicator, StyleSheet } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { WebView } from 'react-native-webview'
 import { useNavigation } from '@react-navigation/native'
 import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
 import { MaterialCommunityIcons } from '@expo/vector-icons'; 
 import { ThemeContext, Button } from 'react-native-elements'
+import { Platform } from 'react-native'
 
 export default function Browser({ devices, selectedDevice }) {
     const [webViewState, setWebViewState] = useState(1);
@@ -84,7 +85,7 @@ export default function Browser({ devices, selectedDevice }) {
                         onLoad={() => { setWebViewState(0) }}
                         onLoadStart={() => { setWebViewState(1) }}
                         onNavigationStateChange={(navState) => { if (navState.url === "about:blank" && !navState.loading) setWebViewState(-1) }} //Necessary because sometimes it loads about:blank when a site doesn't render and says that the result was successful
-                        style={[{ marginBottom: useBottomTabBarHeight() }, webViewState === 0 ? { display: "flex" } : { display: "none" }]}
+                        style={[ Platform.OS !== 'ios' ? { marginBottom: useBottomTabBarHeight() } : null, webViewState === 0 ? { display: "flex" } : { display: "none" }]}
                         source={{ uri: devices[selectedDevice].protocol + "://" + devices[selectedDevice].ip + ":" + devices[selectedDevice].port + "/" }} />
                 :
                 displayNoDevice()

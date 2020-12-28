@@ -1,10 +1,11 @@
 import React, { useState } from 'react'
-import { View, Text } from 'react-native'
+import { View, Text, ScrollView } from 'react-native'
 import { Input, Button } from 'react-native-elements'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import DropDownPicker from 'react-native-dropdown-picker';
 import produce from 'immer'
 import { useNavigation } from '@react-navigation/native'
+import { Platform } from 'react-native';
 
 export default function Add({ setDevices }) {
     const navigation = useNavigation();
@@ -31,45 +32,48 @@ export default function Add({ setDevices }) {
 
     return (
         <SafeAreaView style={{ flex: 1 }} >
-            <View style={{ flexDirection: 'column', justifyContent: 'space-between', marginHorizontal: 10, marginVertical: 20, height:500 }}>
-                <Text style={{ fontSize: 24, fontWeight: 'bold' }}>Add Device: </Text>
-                <View>
-                    <Text style={{ marginLeft: 10 }} >Name: </Text>
-                    <Input value={device.name} onChangeText={value => setDevice({ ...device, name: value })} placeholder="Name" />
-                </View>
-                <View>
-                    <Text style={{ marginLeft: 10 }} >IP Address: </Text>
-                    <Input value={device.ip} onChangeText={value => setDevice({ ...device, ip: value })} placeholder="192.168.1.67" />
-                </View>
-                <View>
-                    <Text style={{ marginLeft: 10 }}>Port: </Text>
-                    <Input value={device.port} onChangeText={value => setDevice({ ...device, port: value })} placeholder="8888" />
-                </View>
-                <View style={{ marginHorizontal: 10 }}>
-                    <Text>Protocol: </Text>
-                    <View style={{ height: 8 }} />
-                    <DropDownPicker
-                        items={[
-                            { label: 'http', value: 'http' },
-                            { label: 'https', value: 'https' },
-                        ]}
-                        defaultValue={device.protocol}
-                        containerStyle={{ height: 50 }}
-                        itemStyle={{
-                            justifyContent: 'flex-start',
-                            paddingVertical: 15
-                        }}
-                        labelStyle={{
-                            fontSize: 18
-                        }}
-                        onChangeItem={protocol => { setDevice({ ...device, protocol: protocol.value }) }}
+            <ScrollView>
+                <View style={{ flexDirection: 'column', justifyContent: 'space-between', marginHorizontal: 10, marginTop: 20, height: 600 }}>
+                    <Text style={{ fontSize: 24, fontWeight: 'bold' }}>Add Device: </Text>
+                    <View>
+                        <Text style={{ marginLeft: 10 }} >Name: </Text>
+                        <Input value={device.name} onChangeText={value => setDevice({ ...device, name: value })} placeholder="Name" />
+                    </View>
+                    <View>
+                        <Text style={{ marginLeft: 10 }} >IP Address: </Text>
+                        <Input value={device.ip} onChangeText={value => setDevice({ ...device, ip: value })} placeholder="192.168.1.67" />
+                    </View>
+                    <View>
+                        <Text style={{ marginLeft: 10 }}>Port: </Text>
+                        <Input value={device.port} onChangeText={value => setDevice({ ...device, port: value })} placeholder="8888" />
+                    </View>
+                    <View style={{ marginHorizontal: 10, ...(Platform.OS !== 'android' && { zIndex : 10 }) }}>
+                        <Text>Protocol: </Text>
+                        <View style={{ height: 8 }} />
+                        <DropDownPicker
+                            items={[
+                                { label: 'http', value: 'http' },
+                                { label: 'https', value: 'https' },
+                            ]}
+                            defaultValue={device.protocol}
+                            containerStyle={{ height: 50 }}
+                            itemStyle={{
+                                justifyContent: 'flex-start',
+                                paddingVertical: 15
+                            }}
+                            labelStyle={{
+                                fontSize: 18
+                            }}
+                            onChangeItem={protocol => { setDevice({ ...device, protocol: protocol.value }) }}
                         />
+                    </View>
+                    <View />
+                    <Button onPress={() => { addDevice() }} buttonStyle={{ marginHorizontal: 10, paddingHorizontal: 25, alignSelf: 'flex-end' }}
+                        title="Add Device"
+                    />
+                    <View style={{ height: 100 }} />
                 </View>
-                <View/>
-                <Button onPress={() => { addDevice() }} buttonStyle={{ marginHorizontal: 10 }}
-                    title="Add Device"
-                /> 
-            </View>
+            </ScrollView>
         </SafeAreaView>
     )
 }
