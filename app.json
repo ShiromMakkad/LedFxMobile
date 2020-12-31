@@ -20,13 +20,17 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "buildNumber": "1.0.0",
+      "bundleIdentifier": "com.shirom.ledfx"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/white-icon.png",
         "backgroundColor": "#333333"
-      }
+      },
+      "versionCode": 1,
+      "package": "com.shirom.ledfx"
     },
     "web": {
       "favicon": "./assets/favicon.png"
