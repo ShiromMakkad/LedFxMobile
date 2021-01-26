@@ -1,6 +1,6 @@
 # LedFxMobile
 
-Control your [LedFx](https://github.com/ahodges9/LedFx) sound reactive LEDs from your phone!
+Control your [LedFx](https://github.com/LedFx/LedFx) sound reactive LEDs from your phone!
 
 ## Screenshots
 
