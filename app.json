@@ -2,7 +2,7 @@
   "expo": {
     "name": "LedFx",
     "slug": "LedFx",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "primaryColor": "#333333",
@@ -21,19 +21,20 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "buildNumber": "1.0.0",
+      "buildNumber": "1.1.0",
       "bundleIdentifier": "com.shirom.ledfx"
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/white-icon.png",
+        "foregroundImage": "./assets/android-icon-foreground.png",
         "backgroundColor": "#333333"
       },
-      "versionCode": 1,
+      "versionCode": 3,
       "package": "com.shirom.ledfx"
     },
-    "web": {
-      "favicon": "./assets/favicon.png"
+    "androidNavigationBar": {
+      "barStyle": "light-content",
+      "backgroundColor": "#333333"
     }
   }
 }

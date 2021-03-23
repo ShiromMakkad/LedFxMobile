@@ -4,7 +4,7 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import produce from 'immer'
 import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs'
 import { MaterialCommunityIcons } from '@expo/vector-icons'; 
-import { ListItem } from 'react-native-elements'
+import { ListItem, Icon } from 'react-native-elements'
 import hexToRgba from 'hex-to-rgba';
 import { useIsFocused, useNavigation } from '@react-navigation/native'
 import { Platform } from 'react-native'
@@ -46,16 +46,18 @@ export default function Devices({ devices, setDevices, selectedDevice, setSelect
     }
 
       const renderItem = ({ item: device, index: i }) => (
-          // If anyone can fix the lag on this, please do. I've spent hours on it. 
           <TouchableWithoutFeedback onPress={() => setSelectedDevice(i)}>
               <ListItem
-                  title={device.name}
-                  subtitle={device.ip}
                   rightIcon={isDeleting ? { name: 'trash-can', type: 'material-community', color: global.theme.colors.error, size: 33, onPress: () => deleteDevice(i) } : undefined}
                   bottomDivider
                   containerStyle={{ backgroundColor: selectedDevice == i ? hexToRgba(global.theme.colors.success, 0.25) : global.theme.colors.background }}
-                  underlayColor={hexToRgba(global.theme.colors.success, 0.25)}
-              />
+              >
+                  <ListItem.Content underlayColor={hexToRgba(global.theme.colors.success, 0.25)}>
+                      <ListItem.Title>{device.name}</ListItem.Title>
+                      <ListItem.Subtitle>{device.ip}</ListItem.Subtitle>
+                  </ListItem.Content>
+                  {isDeleting ? <Icon name='trash-can' type='material-community' color={global.theme.colors.error} size={33} onPress={() => deleteDevice(i)} /> : undefined}
+              </ListItem>
           </TouchableWithoutFeedback>
       );
 

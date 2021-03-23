@@ -14,7 +14,7 @@ import Add from './App/Add'
 
 global.theme = {
   colors: {
-    primary: '#18BFD9',
+    primary: '#009688',
     secondary: '#333333',
     success: '#3CB479',
     error: '#F44336',
